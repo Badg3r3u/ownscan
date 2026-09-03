@@ -16,3 +16,11 @@ jobs:
         run: pip install -e ".[dev]"
       - name: Run tests
         run: pytest
+
+  scan-src:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Badg3r3u/ownscan-action@main
+        with:
+          path: src
