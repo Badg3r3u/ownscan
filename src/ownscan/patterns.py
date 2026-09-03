@@ -5,8 +5,6 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-# --- skip rules ----------------------------------------------------------------
-
 SKIP_DIRS = frozenset(
     {
         ".git",
@@ -20,35 +18,16 @@ SKIP_DIRS = frozenset(
     }
 )
 
-MAX_FILE_BYTES = 1_048_576  # 1 MiB; keeps the walk snappy and avoids huge blobs
+MAX_FILE_BYTES = 1_048_576
 
-# --- secret patterns -----------------------------------------------------------
-
-# AWS access key IDs and generic AKIA-style identifiers (20 chars: AKIA + 16).
 AWS_ACCESS_KEY = re.compile(r"\bAKIA[0-9A-Z]{16}\b")
-
-# Classic (`ghp_`) and fine-grained (`github_pat_`) GitHub personal access tokens.
 GITHUB_PAT = re.compile(r"\b(?:ghp_[A-Za-z0-9]{36,}|github_pat_[A-Za-z0-9_]{20,})\b")
-
-# Slack bot / user / app tokens.
 SLACK_TOKEN = re.compile(r"\bxox[baprs]-[A-Za-z0-9-]{10,}\b")
-
-# PEM / OpenSSH private-key armor headers (the header line is enough to flag).
 PEM_HEADER = re.compile(r"-----BEGIN (?:RSA |DSA |EC |OPENSSH )?PRIVATE KEY-----")
-
-# Variable names that look like credentials on assignment lines.
 _SECRET_NAME = re.compile(r"(?i)(?:SECRET|PASSWORD|API_KEY|TOKEN)")
-
 DEBUG_TRUE = re.compile(r"(?i)\bdebug\s*[=:]\s*true\b")
-
-# Header, nginx add_header, JSON key — any form that allows any origin.
-CORS_WILDCARD = re.compile(
-    r"(?i)access-control-allow-origin[\s" + '"' + r"':=,]+" + r"\*"
-)
-
+CORS_WILDCARD = re.compile(r"""(?i)access-control-allow-origin[\s"':=,]+\*""")
 _USER_INSTRUCTION = re.compile(r"(?i)^USER\s+(\S+)")
-
-# --- filename helpers ----------------------------------------------------------
 
 _ENV_SKIP = frozenset({".env.example", ".env.sample", ".env.template"})
 
@@ -113,10 +92,7 @@ def is_config_file(path: Path) -> bool:
 
 
 def env_assignment_value(line: str) -> str | None:
-    """Return the assigned value if this looks like a SECRET/PASSWORD/API_KEY/TOKEN line.
-
-    Empty, comment-only, and missing values are ignored.
-    """
+    """Return the assigned value if this looks like a SECRET/PASSWORD/API_KEY/TOKEN line."""
     stripped = line.strip()
     if not stripped or stripped.startswith("#"):
         return None
@@ -131,7 +107,6 @@ def env_assignment_value(line: str) -> str | None:
         return None
     if value.startswith("#"):
         return None
-    # Drop an inline comment only when it is clearly separated.
     if " #" in value:
         value = value[: value.index(" #")].rstrip()
     if (len(value) >= 2) and (

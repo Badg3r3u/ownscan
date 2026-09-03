@@ -10,6 +10,7 @@ SECRET_TYPES = frozenset(
         "aws_access_key",
         "github_pat",
         "slack_token",
+        "pem_private_key",
         "env_secret",
     }
 )
