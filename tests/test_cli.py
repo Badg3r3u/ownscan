@@ -31,7 +31,6 @@ def test_dirty_tree_exits_one_and_prints_path_line_type():
     assert "aws_access_key" in result.stdout
     assert "github_pat" in result.stdout
     assert ":" in result.stdout
-    # path:line: type: snippet
     sample = next(line for line in result.stdout.splitlines() if "aws_access_key" in line)
     parts = sample.split(": ", 2)
     assert len(parts) >= 2

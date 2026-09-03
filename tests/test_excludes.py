@@ -30,7 +30,7 @@ def test_secrets_inside_node_modules_are_ignored():
     findings = scan_path(FIXTURES)
     assert not any("node_modules" in f.path for f in findings)
     nested = FIXTURES / "node_modules" / "evil" / "secret.js"
-    assert nested.is_file()  # fixture exists; skip is the behavior under test
+    assert nested.is_file()
 
 
 def test_secrets_inside_venv_and_pycache_are_ignored():

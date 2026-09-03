@@ -62,7 +62,7 @@ def test_debug_true():
 
 def test_cors_wildcard():
     assert CORS_WILDCARD.search("add_header Access-Control-Allow-Origin *;")
-    assert CORS_WILDCARD.search('Access-Control-Allow-Origin: *')
+    assert CORS_WILDCARD.search("Access-Control-Allow-Origin: *")
     assert CORS_WILDCARD.search('"Access-Control-Allow-Origin": "*"')
     assert not CORS_WILDCARD.search("Access-Control-Allow-Origin: https://example.com")
 
