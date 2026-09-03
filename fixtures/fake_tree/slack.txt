@@ -1,0 +1,2 @@
+# FAKE/EXAMPLE Slack bot token for ownscan fixtures. Not real.
+SLACK_BOT_TOKEN=xoxb-EXAMPLEFAKETOKENVALUE

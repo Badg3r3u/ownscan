@@ -1,0 +1,3 @@
+# FAKE/EXAMPLE GitHub PATs for ownscan fixtures. Not real.
+classic = ghp_EXAMPLEFAKESECRETTOKEN00000000000000
+fine_grained = github_pat_EXAMPLE_FAKE_00000000000000000000

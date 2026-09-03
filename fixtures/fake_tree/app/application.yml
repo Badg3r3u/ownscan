@@ -1,0 +1,2 @@
+# EXAMPLE YAML config with debug enabled (misconfiguration fixture)
+debug: true

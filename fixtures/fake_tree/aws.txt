@@ -1,0 +1,2 @@
+# FAKE/EXAMPLE credentials for ownscan fixtures. Not real. Do not use.
+aws_access_key_id = AKIAIOSFODNN7EXAMPLE
